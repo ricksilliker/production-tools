@@ -1,0 +1,35 @@
+openapi: '3.0.3'
+info:
+  title: 'production api'
+  version: '0.1.0'
+paths:
+  /projects:
+    get:
+      tags: [Projects]
+      operationId: api.projects.get_projects
+      summary: Get all Projects
+      responses:
+        200:
+          description: Return a list of ProjectItems
+          content:
+            application/json:
+              schema:
+                title: Get Projects
+                type: object
+                properties:
+                  projects:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/ProjectItem'
+components:
+  schemas:
+    ProjectItem:
+      type: object
+      required:
+        - id
+        - name
+      properties:
+        id:
+          type: integer
+        name:
+          type: string

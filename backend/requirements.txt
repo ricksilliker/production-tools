@@ -1,0 +1,4 @@
+connexion
+gevent
+connexion[swagger-ui]
+requests

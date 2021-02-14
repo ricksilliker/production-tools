@@ -13,8 +13,12 @@ class ProjectType(Enum):
 @dataclass
 class ProjectItem:
     id: int
-    displayName: str
+    name: str
     code: str
     imageURI: str
     type: ProjectType
     internal: bool
+
+
+def get_projects():
+    return [{'id': 0, 'name': 'Test'}]
