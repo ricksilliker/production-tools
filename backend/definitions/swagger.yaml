@@ -1,0 +1,126 @@
+openapi: '3.0.3'
+info:
+  title: 'production api'
+  version: '0.1.0'
+paths:
+  /projects:
+    get:
+      tags: [Projects]
+      operationId: api.projects.get_projects
+      summary: Get all Projects
+      responses:
+        200:
+          description: Return a list of ProjectItems
+          content:
+            application/json:
+              schema:
+                title: Get Projects
+                type: object
+                properties:
+                  projects:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/ProjectItem'
+        401:
+          description: Unauthorized
+          content:
+            text/plain:
+              schema:
+                type: string
+              example: Unauthorized
+        500:
+          description: Internal Error
+          content:
+            text/plain:
+              schema:
+                type: string
+              example: Internal Error
+    post:
+      tags: [Projects]
+      operationId: api.projects.add_project
+      summary: Create a new Project
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - name
+                - code
+                - project_type
+              properties:
+                name:
+                  type: string
+                code:
+                  type: string
+                project_type:
+                  type: string
+                  enum:
+                    - Commercial
+                    - Feature
+                    - Game
+                    - Software
+                    - Web
+      responses:
+        200:
+          description: Return the new project ID
+          content:
+            application/json:
+              schema:
+                title: Create Project
+                type: object
+                properties:
+                  id:
+                    type: int
+        400:
+          description: Bad Request
+          content:
+            text/plain:
+              schema:
+                type: string
+              example: Bad Content
+        401:
+          description: Unauthorized
+          content:
+            text/plain:
+              schema:
+                type: string
+              example: Unauthorized
+        500:
+          description: Internal Error
+          content:
+            text/plain:
+              schema:
+                type: string
+              example: Internal Error
+
+components:
+  schemas:
+    ProjectItem:
+      type: object
+      required:
+        - id
+        - name
+        - code
+        - project_type
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+        code:
+          type: string
+          maxLength: 12
+        image_uri:
+          type: string
+        project_type:
+          type: string
+          enum:
+            - Commercial
+            - Feature
+            - Game
+            - Software
+            - Web
+        internal:
+          type: boolean
+          default: false

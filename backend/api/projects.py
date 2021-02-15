@@ -33,6 +33,7 @@ def get_projects():
     db_secret = os.environ['DB_SECRET']
 
     results = []
+    conn = None
 
     try:
         conn = psycopg2.connect(f"dbname='{db_user}' user='{db_user}' host='{db_host}' password='{db_secret}'")
@@ -52,3 +53,42 @@ def get_projects():
             conn.close()
 
     return results
+
+
+def add_project(body):
+    name = body['name']
+    code = body['code']
+    project_type = body['project_type']
+    # image_uri = req.get('image_uri', 'NULL')
+    # internal = req.get('internal', False)
+
+    try:
+        db_user = os.environ['DB_USER']
+        db_host = os.environ['DB_HOST']
+        db_secret = os.environ['DB_SECRET']
+    except KeyError as err:
+        LOG.exception('Missing env var.')
+        return 'Internal Error', 500
+
+    project_id = None
+    conn = None
+
+    try:
+        conn = psycopg2.connect(f"dbname='{db_user}' user='{db_user}' host='{db_host}' password='{db_secret}'")
+        cur = conn.cursor()
+        cur.execute(f"""
+            INSERT INTO project_items(name, code, project_type)
+            VALUES('{name}', '{code}', '{project_type}')
+            RETURNING id
+        """)
+        project_id = cur.fetchone()[0]
+        conn.commit()
+        cur.close()
+    except:
+        LOG.exception('Failed to create Project entry.')
+        return 'Internal Error', 500
+    finally:
+        if conn is not None:
+            conn.close()
+
+    return {'id': project_id}
