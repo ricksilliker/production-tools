@@ -1,0 +1,27 @@
+version: '3'
+services:
+  db:
+    image: postgres
+    restart: always
+    hostname: postgres-db
+    environment:
+      - "POSTGRES_PASSWORD=secret"
+    ports:
+      - "5432:5432"
+    networks:
+      - production-tools
+  api:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    environment:
+      - "DB_HOST=postgres-db"
+      - "DB_USER=postgres"
+      - "DB_SECRET=secret"
+    ports:
+    - "8080:8080"
+    networks:
+      - production-tools
+
+networks:
+  production-tools:

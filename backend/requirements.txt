@@ -2,3 +2,4 @@ connexion
 gevent
 connexion[swagger-ui]
 requests
+psycopg2

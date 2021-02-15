@@ -7,4 +7,4 @@ COPY ./app.py /
 COPY ./api/. /api
 COPY swagger.yaml /
 
-CMD ['python', 'app.py']
+ENTRYPOINT ["python", "app.py"]
