@@ -5,6 +5,6 @@ RUN pip install -r requirements.txt
 
 COPY ./app.py /
 COPY ./api/. /api
-COPY swagger.yaml /
+COPY ./definitions/. /definitions
 
 ENTRYPOINT ["python", "app.py"]

@@ -6,5 +6,5 @@ class AssetItem:
     id: int
     code: str
     tags: list[str]
-    previewImageURI: str
+    imageURI: str
     projectID: int

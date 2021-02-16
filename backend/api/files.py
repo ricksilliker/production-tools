@@ -8,7 +8,7 @@ class FileType(Enum):
     movie = 'Movie'
     cache = 'Cache'
     archive = 'Archive'
-    pdf = 'PDF'
+    documentation = 'Documentation'
     delivery = 'Delivery'
     resource = 'Resource'
     incoming = 'Incoming'
@@ -21,4 +21,5 @@ class ProjectFile:
     name: str
     type: FileType
     createdAt: str
+    createdBy: int
     size: int
