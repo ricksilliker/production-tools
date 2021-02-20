@@ -1,30 +1,13 @@
 import os
 import logging
-from dataclasses import dataclass
-from enum import Enum
 
 import psycopg2
 
+from ..model.projects import ProjectItem
+
+
 logging.basicConfig(level=logging.INFO)
 LOG = logging.getLogger()
-
-
-class ProjectType(Enum):
-    commercial = 'Commercial'
-    feature = 'Feature'
-    game = 'Game'
-    software = 'Software'
-    web = 'Web'
-
-
-@dataclass
-class ProjectItem:
-    id: int
-    name: str
-    code: str
-    imageURI: str
-    type: ProjectType
-    internal: bool
 
 
 def get_projects():

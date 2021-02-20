@@ -6,7 +6,7 @@ paths:
   /projects:
     get:
       tags: [Projects]
-      operationId: api.projects.get_projects
+      operationId: api.domain.projects.get_projects
       summary: Get all Projects
       responses:
         200:
@@ -27,7 +27,7 @@ paths:
           $ref: '#/components/responses/InternalError'
     post:
       tags: [Projects]
-      operationId: api.projects.add_project
+      operationId: api.domain.projects.add_project
       summary: Create a new Project
       requestBody:
         content:
@@ -64,6 +64,70 @@ paths:
                     type: int
         400:
           $ref: '#/components/responses/BadContentError'
+        401:
+          $ref: '#/components/responses/UnauthorizedError'
+        500:
+          $ref: '#/components/responses/InternalError'
+  /users:
+    post:
+      tags: [ Users ]
+      operationId: api.domain.users.add_user
+      summary: Create a new User
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - firstName
+                - lastName
+                - login
+                - password
+              properties:
+                firstName:
+                  type: string
+                lastName:
+                  type: string
+                login:
+                  type: string
+                  format: email
+                password:
+                  type: string
+                  format: password
+      responses:
+        200:
+          description: Return the new User ID.
+          content:
+            application/json:
+              schema:
+                title: Create User
+                type: object
+                properties:
+                  id:
+                    type: int
+        400:
+          $ref: '#/components/responses/BadContentError'
+        401:
+          $ref: '#/components/responses/UnauthorizedError'
+        500:
+          $ref: '#/components/responses/InternalError'
+    get:
+      tags: [ Users ]
+      operationId: api.domain.users.get_users
+      summary: Get all Projects
+      responses:
+        200:
+          description: Return a list of Users.
+          content:
+            application/json:
+              schema:
+                title: Get Users
+                type: object
+                properties:
+                  projects:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/User'
         401:
           $ref: '#/components/responses/UnauthorizedError'
         500:
@@ -121,3 +185,20 @@ components:
         internal:
           type: boolean
           default: false
+    User:
+      type: object
+      required:
+        - id
+        - firstName
+        - lastName
+        - login
+      properties:
+        firstName:
+          type: string
+        lastName:
+          type: string
+        login:
+          type: string
+          format: email
+        hardwareProfileID:
+          type: integer

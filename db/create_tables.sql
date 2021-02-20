@@ -50,6 +50,11 @@ CREATE TYPE pass_status AS ENUM (
     'Phase 1',
     'Phase 2'
 );
+CREATE TYPE os_type AS ENUM (
+    'Windows',
+    'MacOS',
+    'Linux'
+);
 
 -- Create Projects table.
 CREATE TABLE project_items (
@@ -153,4 +158,28 @@ CREATE TABLE schedule_items (
     id serial NOT NULL PRIMARY KEY,
     name text,
     entries int[]
+);
+
+-- Create Software table.
+CREATE TABLE software_items (
+    id serial NOT NULL PRIMARY KEY,
+    display_name text,
+    category varchar(24),
+    linux_path text,
+    windows_path text,
+    mac_path text
+);
+
+-- Create Hardware table.
+CREATE TABLE hardware_items (
+    id serial NOT NULL PRIMARY KEY,
+    os os_type NOT NULL,
+    distro varchar(24) NOT NULL,
+    version varchar(24) NOT NULL,
+    cpu text,
+    gpu text[],
+    ram text[],
+    storage text[],
+    accessories text[],
+    software int[]
 );

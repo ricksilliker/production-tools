@@ -1,5 +1,4 @@
 from dataclasses import dataclass
-from enum import Enum
 
 
 @dataclass
@@ -9,3 +8,4 @@ class User:
     lastName: str
     login: str
     password: str
+    hardwareProfileID: int
